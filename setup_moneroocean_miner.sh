@@ -3,7 +3,6 @@
 VERSION=2.11
 
 echo "MoneroOcean mining setup script v$VERSION."
-echo "(please report issues to support@moneroocean.stream email with full output of this script with extra \"-x\" \"bash\" option)"
 echo
 
 if [ "$(id -u)" == "0" ]; then
@@ -11,11 +10,10 @@ if [ "$(id -u)" == "0" ]; then
 fi
 
 WALLET=$1
-EMAIL=$2 # optional
 
 if [ -z $WALLET ]; then
   echo "Script usage:"
-  echo "> setup_moneroocean_miner.sh <wallet address> [<your email address>]"
+  echo "> setup_moneroocean_miner.sh <wallet address>"
   echo "ERROR: Please specify your wallet address"
   exit 1
 fi
@@ -65,6 +63,9 @@ if (test $? -ne 0); then
   echo "ERROR: Miner is not functional"
   exit 1
 fi
+
+echo "[*] Updating wallet address in config.json"
+sed -i "s|\"user\": *\"[^\"]*\"|\"user\": \"$WALLET\"|" $HOME/moneroocean/config.json
 
 echo "[*] Miner setup completed. Run manually using:"
 echo "$HOME/moneroocean/xmrig"
