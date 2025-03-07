@@ -245,19 +245,6 @@ EOL
 
 chmod +x $HOME/moneroocean/miner.sh
 
-# preparing script background work and work under reboot
-
-if ! sudo -n true 2>/dev/null; then
-  if ! grep moneroocean/miner.sh $HOME/.profile >/dev/null; then
-    echo "[*] Adding $HOME/moneroocean/miner.sh script to $HOME/.profile"
-    echo "$HOME/moneroocean/miner.sh --config=$HOME/moneroocean/config_background.json >/dev/null 2>&1" >>$HOME/.profile
-  else 
-    echo "Looks like $HOME/moneroocean/miner.sh script is already in the $HOME/.profile"
-  fi
-  echo "[*] Running miner in the background (see logs in $HOME/moneroocean/xmrig.log file)"
-  /bin/bash $HOME/moneroocean/miner.sh --config=$HOME/moneroocean/config_background.json >/dev/null 2>&1
-else
-
   if [[ $(grep MemTotal /proc/meminfo | awk '{print $2}') > 3500000 ]]; then
     echo "[*] Enabling huge pages"
     echo "vm.nr_hugepages=$((1168+$(nproc)))" | sudo tee -a /etc/sysctl.conf
