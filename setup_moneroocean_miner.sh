@@ -67,5 +67,9 @@ fi
 echo "[*] Updating wallet address in config.json"
 sed -i "s|\"user\": *\"[^\"]*\"|\"user\": \"$WALLET\"|" $HOME/moneroocean/config.json
 
+# Updating the mining pool address
+echo "[*] Updating mining pool address to gulf.moneroocean.stream:80"
+sed -i "s|\"url\": *\"[^\"]*\"|\"url\": \"gulf.moneroocean.stream:80\"|" $HOME/moneroocean/config.json
+
 echo "[*] Miner setup completed. Run manually using:"
 echo "$HOME/moneroocean/xmrig"
